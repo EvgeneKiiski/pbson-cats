@@ -1,10 +1,12 @@
 package pbson.cats
 
-import cats.data.{Chain, NonEmptyChain}
+import cats.data._
+import cats.implicits._
 import org.mongodb.scala.bson.BsonArray
 import org.scalatest.{EitherValues, Matchers, ParallelTestExecution, WordSpec}
 import pbson._
 
+import scala.collection.immutable.SortedSet
 import scala.collection.parallel.immutable
 
 
@@ -46,6 +48,48 @@ class CatsEncoderTest extends WordSpec with ParallelTestExecution with Matchers 
     }
     "encode Append" in {
       val test: ChainTest = ChainTest(NonEmptyChain.fromChainAppend(Chain.one(3),4))
+      val bson = test.toBson
+      bson.asDocument().get("a") shouldEqual BsonArray(3, 4)
+    }
+  }
+
+  "NonEmptyList" should {
+    case class Test(a: NonEmptyList[Int])
+    "encode Singleton" in {
+      val test: Test = Test(NonEmptyList.one(3))
+      val bson = test.toBson
+      bson.asDocument().get("a") shouldEqual BsonArray(3)
+    }
+    "encode List" in {
+      val test: Test = Test(NonEmptyList.fromListUnsafe(List(3, 4)))
+      val bson = test.toBson
+      bson.asDocument().get("a") shouldEqual BsonArray(3, 4)
+    }
+  }
+
+  "NonEmptyVector" should {
+    case class Test(a: NonEmptyVector[Int])
+    "encode Singleton" in {
+      val test: Test = Test(NonEmptyVector.one(3))
+      val bson = test.toBson
+      bson.asDocument().get("a") shouldEqual BsonArray(3)
+    }
+    "encode List" in {
+      val test: Test = Test(NonEmptyVector.fromVectorUnsafe(Vector(3, 4)))
+      val bson = test.toBson
+      bson.asDocument().get("a") shouldEqual BsonArray(3, 4)
+    }
+  }
+
+  "NonEmptySet" should {
+    case class Test(a: NonEmptySet[Int])
+    "encode Singleton" in {
+      val test: Test = Test(NonEmptySet.one(3))
+      val bson = test.toBson
+      bson.asDocument().get("a") shouldEqual BsonArray(3)
+    }
+    "encode List" in {
+      val test: Test = Test(NonEmptySet.fromSetUnsafe(SortedSet(3, 4)))
       val bson = test.toBson
       bson.asDocument().get("a") shouldEqual BsonArray(3, 4)
     }
