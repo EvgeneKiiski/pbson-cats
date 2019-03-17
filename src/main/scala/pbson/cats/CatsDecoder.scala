@@ -2,7 +2,6 @@ package pbson.cats
 
 import cats.Order
 import cats.data._
-import cats.data.Chain.Wrap
 import org.bson.{BsonArray, BsonDocument, BsonType}
 import pbson.{BsonDecoder, BsonMapDecoder}
 import pbson.BsonDecoder._

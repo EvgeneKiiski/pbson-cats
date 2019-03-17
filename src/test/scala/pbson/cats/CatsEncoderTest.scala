@@ -7,7 +7,6 @@ import org.scalatest.{EitherValues, Matchers, ParallelTestExecution, WordSpec}
 import pbson._
 
 import scala.collection.immutable.SortedSet
-import scala.collection.parallel.immutable
 
 
 /**

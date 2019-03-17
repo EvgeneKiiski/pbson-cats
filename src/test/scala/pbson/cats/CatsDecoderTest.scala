@@ -1,7 +1,7 @@
 package pbson.cats
 
 import cats.data._
-import org.mongodb.scala.bson.{BsonArray, BsonDocument, BsonInt32, BsonString, BsonValue}
+import org.mongodb.scala.bson.{BsonArray, BsonDocument, BsonInt32, BsonValue}
 import org.scalatest.{EitherValues, Matchers, ParallelTestExecution, WordSpec}
 import pbson._
 
